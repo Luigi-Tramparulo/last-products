@@ -2,22 +2,37 @@ import React from 'react';
 import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button
-} from 'reactstrap';
+} from 'reactstrap'
+import './lens.scss'
+import SubHeader from '../subheader'
 
 const Lens = (props) => {
-    return (
-        <div>
-            <Card>
-                <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />
+
+    const { product } = props
+
+    const mapProducts = product.map((product, index) => {
+        return (
+
+            <Card key={index}>
+                <CardImg heigth="100%" width="100%" src={`./assets/${product.name.toLowerCase()}.jpeg`} alt="Card image cap" />
                 <CardBody>
-                    <CardTitle>Card title</CardTitle>
-                    <CardSubtitle>Card subtitle</CardSubtitle>
-                    <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-                    <Button>Button</Button>
+                    <CardTitle>{`RayBan ${product.name}`}</CardTitle>
+                    <CardSubtitle>{product.sku}</CardSubtitle>
+                    <CardText>{`Qty: ${product.qty}`}</CardText>
+                    <CardText>{`Price: ${product.price}\u20AC`}</CardText>
+                    <Button className="button-style">Add</Button>
                 </CardBody>
             </Card>
+        )
+    })
+    return (
+        <div className="lens-view">
+            <SubHeader titleAvaible="LAST PRODUCT AVAILABLE" productAvaible={`${product.length} product available`} />
+            <div className="product-list">
+                {mapProducts}
+            </div>
         </div>
-    );
+    )
 };
 
 export default Lens;

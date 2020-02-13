@@ -1,0 +1,28 @@
+.lens-view{
+  width: 80%;
+  margin: auto;
+
+  .product-list{
+      display: flex;
+      justify-content: center;
+      text-align: left;
+      & > div{
+          margin: 1.5rem;
+          padding: 1.5rem;
+      }
+      .button-style{
+        background-color: #5F729D;
+      }
+      .card-title{
+        font-weight: bold;
+        font-size: 1.25rem;
+        color: #4d4d4d;
+      }
+      .card-subtitle{
+        font-weight: normal;
+        font-size: 0.9rem;
+
+      }
+
+  }
+}
