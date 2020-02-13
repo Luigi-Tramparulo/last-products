@@ -1,6 +1,6 @@
-export const actions = (type, price) => {
+export const actions = (type, item) => {
     return {
         type: type,
-        price: price
+        item: item
     }
 }
