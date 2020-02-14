@@ -1,12 +1,13 @@
 import React from 'react';
 import { Table } from 'reactstrap';
+import './cart.scss'
 
 const Cart = (props) => {
     return (
-        <Table>
+      <div>
+        <Table className="table-cart">
             <thead>
                 <tr>
-                    <th>Model</th>
                     <th>SKU</th>
                     <th>Size</th>
                     <th>Qty</th>
@@ -15,25 +16,30 @@ const Cart = (props) => {
             </thead>
             <tbody>
                 <tr>
-                    <th scope="row">1</th>
                     <td>Mark</td>
                     <td>Otto</td>
                     <td>@mdo</td>
+                    <td>150</td>
                 </tr>
                 <tr>
-                    <th scope="row">2</th>
                     <td>Jacob</td>
                     <td>Thornton</td>
                     <td>@fat</td>
+                    <td>150</td>
                 </tr>
                 <tr>
-                    <th scope="row">3</th>
                     <td>Larry</td>
                     <td>the Bird</td>
                     <td>@twitter</td>
+                    <td>150</td>
                 </tr>
             </tbody>
         </Table>
+        <div className="total-cart">
+          <p>Total piecies:</p>
+          <p>Total price:</p>
+        </div>
+      </div>
     );
 }
 

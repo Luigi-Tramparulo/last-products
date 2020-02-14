@@ -1,0 +1,17 @@
+.circle-add{
+  background-color: #5f729d;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+
+  & > span{
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: white;
+    align-self: center;
+  }
+
+}

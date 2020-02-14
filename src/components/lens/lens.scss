@@ -1,28 +1,59 @@
-.lens-view{
+.lens-view {
   width: 80%;
   margin: auto;
 
-  .product-list{
+  .product-list {
+    display: flex;
+    justify-content: center;
+    text-align: left;
+    & > div {
+      margin: 1rem 1rem;
+    }
+    .button-style {
+      background-color: #5f729d;
+    }
+    .card-title {
+      font-weight: bold;
+      margin-bottom: 0;
+      font-size: 1.5rem;
+      color: #4d4d4d;
+    }
+    .card-subtitle {
+      font-weight: normal;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    .card-text{
+      font-size: 1rem;
+      margin: 0.5rem 0;
+    }
+    .bolder{
+      font-weight: bolder;
+      color: #4d4d4d
+    }
+    .footer-card {
       display: flex;
-      justify-content: center;
-      text-align: left;
-      & > div{
-          margin: 1.5rem;
-          padding: 1.5rem;
-      }
-      .button-style{
-        background-color: #5F729D;
-      }
-      .card-title{
-        font-weight: bold;
-        font-size: 1.25rem;
-        color: #4d4d4d;
-      }
-      .card-subtitle{
-        font-weight: normal;
-        font-size: 0.9rem;
+      align-self: center;
+      margin: 1rem 0;
 
+      & > div {
+        width: 50%;
       }
-
+      & :nth-child(n + 1) {
+        text-align: left;
+      }
+      & :nth-child(n + 2) {
+        text-align: right;
+      }
+      .select-form {
+        & > select {
+          border-radius: 0.3rem;
+          background-color: white;
+          height: 100%;
+          width: 80%;
+          padding: 0.2rem 0;
+        }
+      }
+    }
   }
 }
