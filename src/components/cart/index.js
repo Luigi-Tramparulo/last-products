@@ -1,25 +1,31 @@
-import React from 'react';
-import { Table } from 'reactstrap';
+import React from 'react'
+import { Table } from 'reactstrap'
 import './cart.scss'
 
-/* const mapProductStore = state.products.map(product => {
-  return (
-        <tr>
-          <td>{product.name}</td>
-          <td>{product.sku}</td>
-          <td>{product.size}</td>
-          <td>{product.qty}</td>
-          <td>{product.price}</td>
-      </tr>
-)})
-*/
-
 const Cart = (props) => {
+
+  const mapProductStore = props.products.map(product => {
+    return (
+      <tr>
+        <td>{product.name}<button onClick={(e) => props.removeItem(product,product.id)}>remove</button></td>
+        <td>{product.sku}</td>
+        <td>{product.size}</td>
+        <td>{product.qty}</td>
+        <td>{product.price}</td>
+      </tr>
+    )
+  })
+
+  let totalPrice = props.products.map(product => product.price).reduce((total, currentPrice) => {
+    return total + currentPrice
+  }, 0)
+
     return (
       <div>
         <Table className="table-cart">
             <thead>
                 <tr>
+                    <th>Model</th>
                     <th>SKU</th>
                     <th>Size</th>
                     <th>Qty</th>
@@ -27,29 +33,12 @@ const Cart = (props) => {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>150</td>
-                </tr>
-                <tr>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    <td>150</td>
-                </tr>
-                <tr>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                    <td>150</td>
-                </tr>
+              {mapProductStore}
             </tbody>
         </Table>
         <div className="total-cart">
-          <p>Total piecies:</p>
-          <p>Total price:</p>
+          <p>Total piecies:{props.products.length}</p>
+          <p>Total price:{`${totalPrice}\u20AC`}</p>
         </div>
       </div>
     );

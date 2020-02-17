@@ -19,7 +19,7 @@ const Lens = (props) => {
     setClicked(clicked => !clicked)
   }
 
-  const { product, increment, productStore } = props
+  const { product, increment, decrement, productStore } = props
 
   const mapProducts = product.map((product, index) => {
     return (
@@ -60,14 +60,15 @@ const Lens = (props) => {
 
   return (
     <div>
-    { !clicked ? LensView() : <Cart products={productStore} />}
+        { !clicked ? LensView() : <Cart removeItem = {decrement} products={productStore} />}
     </div>
   )
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    increment: item => dispatch(actions('ADD', item))
+    increment: item => dispatch(actions('ADD', item)),
+    decrement: (item,id) => dispatch(actions('REMOVE', item, id))
   }
 }
 const mapStateToProps = (state) => {

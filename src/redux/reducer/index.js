@@ -6,15 +6,13 @@ const initialState = {
 export const reducer = (state = initialState, action) => {
     switch(action.type) {
         case 'ADD':
-            let totalPrice = state.products.map(product => product.price).reduce((total, currentPrice) => {
-                return total + currentPrice
-            }, 0)
-            return {...state,products:state.products.concat(action.item),totalCart:state.totalCart + totalPrice} ;
+            return {...state,products:state.products.concat(action.item)}
 
         case 'REMOVE':
-            let checkIndex = id => id === action.id;
-            let findItem = state.products.findIndex(checkIndex);
-            return {...state, products:state.products.splice(findItem,1)};
+        const findItem = state.products.findIndex(element => element.id === action.id);
+        const copyState = [...state.products]
+        let spliceState = copyState.splice(findItem, 1)
+            return {...state, products:copyState};
 
         default:
             return state;
