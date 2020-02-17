@@ -53,7 +53,7 @@ const Lens = (props) => {
         <div className="product-list">
           {mapProducts}
         </div>
-        <Footer goToCart={handleClick} checkout="Checkout" />
+        <Footer productAdded={productStore.length} goToCart={handleClick} checkout="Go to cart" />
       </div>
     )
   }

@@ -5,7 +5,8 @@ import './footer.scss'
 const Footer = (props) => {
     return (
         <div className="footer">
-          <ButtonBuy goToCart = {props.goToCart}checkout={props.checkout} />
+          <span>Product added: {props.productAdded}</span>
+          <ButtonBuy goToCart = {props.goToCart} checkout={props.checkout} />
         </div>
     )
 }

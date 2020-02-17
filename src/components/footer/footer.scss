@@ -2,6 +2,12 @@
   background-color: white;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  border: o.5px solid black;
+  & > span {
+    font-size: 1.2rem;
+    color: #4d4d4d;
+  }
   & > div {
     padding: 0.5rem;
   }
