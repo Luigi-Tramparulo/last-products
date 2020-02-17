@@ -2,10 +2,10 @@ import React from 'react'
 import ButtonBuy from '../button'
 import './footer.scss'
 
-const Footer = () => {
+const Footer = (props) => {
     return (
         <div className="footer">
-          <ButtonBuy checkout="Checkout" />
+          <ButtonBuy goToCart = {props.goToCart}checkout={props.checkout} />
         </div>
     )
 }

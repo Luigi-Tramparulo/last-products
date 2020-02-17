@@ -5,7 +5,7 @@ import './button.scss'
 const ButtonBuy = (props) => {
     return (
         <div>
-            <Button className="button-buy">{props.checkout}</Button>
+            <Button onClick = {(e) => props.goToCart()} className="button-buy">{props.checkout}</Button>
         </div>
     )
 }

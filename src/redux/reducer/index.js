@@ -1,6 +1,4 @@
-import {products} from '../../costants'
-
-const initialState = { 
+const initialState = {
     products: [],
     totalCart : 0
 }

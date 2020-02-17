@@ -2,6 +2,18 @@ import React from 'react';
 import { Table } from 'reactstrap';
 import './cart.scss'
 
+/* const mapProductStore = state.products.map(product => {
+  return (
+        <tr>
+          <td>{product.name}</td>
+          <td>{product.sku}</td>
+          <td>{product.size}</td>
+          <td>{product.qty}</td>
+          <td>{product.price}</td>
+      </tr>
+)})
+*/
+
 const Cart = (props) => {
     return (
       <div>
