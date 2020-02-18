@@ -1,0 +1,16 @@
+.order-complete{
+  text-align: center;
+  h1{
+    font-size: 3rem;
+  }
+  h2{
+    font-size: 1.7rem;
+  }
+  & > * {
+    margin: 3rem 0;
+  }
+  button {
+    margin-top: 3rem;
+    padding: 0.9rem 1.2rem;
+  }
+}

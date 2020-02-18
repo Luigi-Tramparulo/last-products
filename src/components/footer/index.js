@@ -1,12 +1,24 @@
 import React from 'react'
-import ButtonBuy from '../button'
+import Buttons from '../button'
 import './footer.scss'
+import Back from '../back'
 
 const Footer = (props) => {
+
+  const checkBack = () => {
+    if(props.textButton === "Checkout") {
+    return (
+      <Back />
+    )
+  }}
+
     return (
         <div className="footer">
-          <span>Product added: {props.productAdded}</span>
-          <ButtonBuy goToCart = {props.goToCart} checkout={props.checkout} />
+          {checkBack()}
+          <div className="footer-right">
+            {props.productAdded}
+            <Buttons path = {props.path} textButton={props.textButton} />
+          </div>
         </div>
     )
 }

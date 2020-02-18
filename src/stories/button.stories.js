@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react'
-import ButtonBuy from '../components/button'
+import Buttons from '../components/button'
 import '../index.css'
 
-storiesOf('ButtonBuy', module)
-  .add('ButtonBuy', () => <ButtonBuy />)
+storiesOf('Buttons', module)
+  .add('Buttons', () => <Buttons />)

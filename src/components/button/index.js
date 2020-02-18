@@ -1,13 +1,16 @@
 import React from 'react';
 import { Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import './button.scss'
 
-const ButtonBuy = (props) => {
+const Buttons = (props) => {
     return (
         <div>
-            <Button onClick = {(e) => props.goToCart()} className="button-buy">{props.checkout}</Button>
+          <Link to={props.path}>
+            <Button to={props.path} className="button-buy">{props.textButton}</Button>
+          </Link>
         </div>
     )
 }
 
-export default ButtonBuy
+export default Buttons
