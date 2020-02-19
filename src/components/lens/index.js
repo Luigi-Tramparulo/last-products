@@ -9,17 +9,17 @@ import Footer from '../footer'
 
 const Lens = (props) => {
 
-  const { product, increment, productStore } = props
+  const { products, add, productStore } = props
 
-  const mapProducts = product.map((product, index) => {
+  const mapProducts = products.map((product, index) => {
     return (
-      <ProductCard key={index} product={product} increment={increment}/>
+      <ProductCard productStore={productStore} key={index} product={product} add={add}/>
     )
   })
 
   return (
       <div className="lens-view">
-        <SubHeader titleAvaible="LAST PRODUCT AVAILABLE" productAvaible={`${product.length} product available`} />
+        <SubHeader titleAvaible="LAST PRODUCT AVAILABLE" productAvaible={`${products.length} product available`} />
         <div className="product-list">
           {mapProducts}
         </div>
@@ -30,7 +30,7 @@ const Lens = (props) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    increment: item => dispatch(actions('ADD', item)),
+    add: item => dispatch(actions('ADD', item)),
   }
 }
 const mapStateToProps = (state) => {

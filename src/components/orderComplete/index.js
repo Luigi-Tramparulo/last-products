@@ -8,7 +8,7 @@ const OrderComplete = () => {
     <div className="order-complete">
       <h1>Thank you!</h1>
       <h2>Your{`3`} products will be shipped soon</h2>
-      <Button textButton={`Buy more`} />
+      <Button path ="/" textButton={`Buy more`} />
       <Footer textButton={`Buy more`} path="/" />
     </div>
   )

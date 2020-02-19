@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div>
         <Header />
-        <Lens product={products} />
+        <Lens products={products} />
     </div>
   )
 }
