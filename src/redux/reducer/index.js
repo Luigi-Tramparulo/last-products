@@ -13,6 +13,9 @@ export const reducer = (state = initialState, action) => {
       copyState.splice(findItem, 1)
       return { ...state, products: copyState };
 
+      case 'RESET':
+        return {...state, products:[]};
+
     default:
       return state;
   }

@@ -1,17 +1,36 @@
 import React from 'react'
-import Button from '../button'
+import { connect } from 'react-redux'
+import { actions } from '../../redux/actions'
+import Buttons from '../button'
 import Footer from '../footer'
+import { Button } from 'reactstrap';
 import './ordercomplete.scss'
 
-const OrderComplete = () => {
+const OrderComplete = (props) => {
+  const {reset} =props
   return (
     <div className="order-complete">
       <h1>Thank you!</h1>
-      <h2>Your{`3`} products will be shipped soon</h2>
-      <Button path ="/" textButton={`Buy more`} />
+      <h2>Your{` ${props.productStore.length}`} products will be shipped soon</h2>
+      <Button onClick={() => reset()}></Button>
+      {/* <Buttons path ="/" textButton={`Buy more`} /> */}
       <Footer textButton={`Buy more`} path="/" />
     </div>
   )
 }
 
-export default OrderComplete
+//il componente buttons ha problemi con l'azione dispatch reset
+
+const mapDispatchToProps = dispatch => {
+  return {
+    reset: () => dispatch(actions('RESET')),
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    productStore: state.products
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(OrderComplete)

@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import './cart.scss'
 import { actions } from '../../redux/actions'
 import ButtonRemove from '../button-remove'
+import SubHeader from '../subheader'
 import Footer from '../footer'
 
 const Cart = (props) => {
@@ -16,6 +17,13 @@ const Cart = (props) => {
         return item.id === product.id && item.size === product.size
         }).length
      )
+  }
+  const fiteredById = (array, id) => {
+    return array.filter((obj, index, self) =>
+      index === self.findIndex((el) => (
+        el[id] === obj[id]
+      ))
+    )
   }
   const removeDuplicates = (array, id, size) => {
     return array.filter((obj, index, self) =>
@@ -52,6 +60,8 @@ const Cart = (props) => {
   const reverseSortByPrice = (product1, product2) => {
     return product2.price - product1.price
   }
+
+
 
   const productFiltered = removeDuplicates(props.productStore,'id','size')
 
@@ -93,6 +103,7 @@ const Cart = (props) => {
 
     return (
       <div className="cart">
+        <SubHeader titleAvaible="CART" productAvaible={`${fiteredById(props.productStore, 'id').length} products added`}/>
         <Table className="table-cart">
             <thead>
                 <tr>
@@ -111,7 +122,7 @@ const Cart = (props) => {
           <p>Total piecies:{props.productStore.length}</p>
           <p>Total price:{` \u20AC ${totalPrice}`}</p>
         </div>
-        <Footer productAdded={`Product added:${props.productStore.length}`} path="/orderprocessed" textButton="Checkout"/>
+        <Footer productAdded={`${fiteredById(props.productStore, 'id').length}Product added`} path="/orderprocessed" textButton="Checkout"/>
       </div>
     );
 }

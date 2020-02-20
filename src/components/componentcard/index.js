@@ -3,6 +3,7 @@ import {
   Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button
 } from 'reactstrap'
+import CircleLast from '../circleLast'
 
 const ProductCard = (props) => {
   const { product, add, productStore } = props
@@ -33,14 +34,28 @@ const ProductCard = (props) => {
   const findTotalQuantity = prod => totalQuantity = totalQuantity + prod.quantity;
   product.sizes.forEach(findTotalQuantity)
 
+  const textLastpiece = <span className="lastpiece">Last piece, buy it now!</span>
+  const checkLastPiece = totalqty =>{
+    if(totalqty<=3){
+      return textLastpiece
+    }
+  }
+
+  const addCircleLast = () =>{
+    if(totalQuantity === 1){
+        return <CircleLast />
+    }
+  }
+
   return (
     <Card>
+      {addCircleLast()}
       <CardImg heigth="100%" width="100%" src={`./assets/${product.name.toLowerCase()}.jpeg`} alt="Card image cap" />
       <CardBody>
         <CardTitle>{`RayBan ${product.name}`}</CardTitle>
         <CardSubtitle>{product.sku}</CardSubtitle>
-        <CardText>Qty: <span className="bolder">{`${totalQuantity}`}</span></CardText>
-        <CardText>Price: <span className="bolder">{`${product.price}\u20AC`}</span></CardText>
+        <CardText>Qty: <span className="bolder">{`${totalQuantity}`}</span>{checkLastPiece(totalQuantity)}</CardText>
+        <CardText>Price: <span className="bolder">{`\u20AC ${product.price}`}</span></CardText>
         <div className="footer-card">
           <div className="select-form">
             <select onChange={handlerSelectChange} value={size}>

@@ -7,7 +7,7 @@ const Buttons = (props) => {
     return (
         <div>
           <Link to={props.path}>
-            <Button to={props.path} className="button-buy">{props.textButton}</Button>
+            <Button  className="button-buy">{props.textButton}</Button>
           </Link>
         </div>
     )
