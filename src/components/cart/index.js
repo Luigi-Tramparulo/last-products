@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { Table } from 'reactstrap'
 import { connect } from 'react-redux'
 import './cart.scss'
@@ -8,17 +8,55 @@ import Footer from '../footer'
 
 const Cart = (props) => {
 
-  const mapProductStore = props.productStore.map((product,index) => {
+ const [clicked, updateClicked] = useState(false)
+
+  const duplicateProduct = product => {
+     return(
+       props.productStore.filter(item => {
+        return item.id === product.id && item.size === product.size
+        }).length
+     )
+  }
+  const removeDuplicates = (array, id, size) => {
+    return array.filter((obj, index, self) =>
+      index === self.findIndex((el) => (
+        el[id] === obj[id] && el[size] === obj[size]
+      ))
+    )
+  }
+
+  const sortByName = (product1, product2) => {
+    if (product2.name > product1.name) {
+      return -1;
+    }
+    if (product1.name > product2.name) {
+      return 1;
+    }
+    return 0;
+  }
+
+  const sortByPrice = (product1, product2) => {
+    return product1.price - product2.price
+  }
+
+  const productFiltered = removeDuplicates(props.productStore,'id','size')
+  const copyProductFiltered = [...productFiltered]
+  const productSorted = copyProductFiltered.sort(sortByName)
+
+
+  const rowRendered = (product, index) => {
     return (
-      <tr key ={index}>
-        <td>{product.name}<ButtonRemove productStore = {product} removeItem = {props.decrement} /></td>
+      <tr key={index}>
+        <td>{product.name}<ButtonRemove productStore={product} removeItem={props.decrement} /></td>
         <td>{product.sku}</td>
         <td>{product.size}</td>
-        <td>{product.qty}</td>
+        <td>{duplicateProduct(product)}</td>
         <td>{`\u20AC ${product.price}`}</td>
       </tr>
     )
-  })
+  }
+
+  const mapProductStore = clicked? productSorted.map(rowRendered) : productFiltered.map(rowRendered)
 
   let totalPrice = props.productStore.map(product => product.price).reduce((total, currentPrice) => {
     return total + currentPrice
@@ -29,11 +67,11 @@ const Cart = (props) => {
         <Table className="table-cart">
             <thead>
                 <tr>
-                    <th>Model</th>
+              <th>Model <img onClick={(e) => clicked ? updateClicked(false):updateClicked(true)} src="./assets/sort.png" alt="sort" width="25px" height="25px"></img></th>
                     <th>SKU</th>
                     <th>Size</th>
                     <th>Qty</th>
-                    <th>Price</th>
+                    <th>Price <img src="./assets/sort.png" alt="sort" width="25px" height="25px"></img></th>
                 </tr>
             </thead>
             <tbody>
@@ -48,6 +86,8 @@ const Cart = (props) => {
       </div>
     );
 }
+
+
 
 const mapDispatchToProps = dispatch => {
   return {
