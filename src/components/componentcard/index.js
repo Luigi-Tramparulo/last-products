@@ -29,13 +29,17 @@ const ProductCard = (props) => {
     }
   }
 
+  let totalQuantity = 0;
+  const findTotalQuantity = prod => totalQuantity = totalQuantity + prod.quantity;
+  product.sizes.forEach(findTotalQuantity)
+
   return (
     <Card>
       <CardImg heigth="100%" width="100%" src={`./assets/${product.name.toLowerCase()}.jpeg`} alt="Card image cap" />
       <CardBody>
         <CardTitle>{`RayBan ${product.name}`}</CardTitle>
         <CardSubtitle>{product.sku}</CardSubtitle>
-        <CardText>Qty: <span className="bolder">{`${product.qty}`}</span></CardText>
+        <CardText>Qty: <span className="bolder">{`${totalQuantity}`}</span></CardText>
         <CardText>Price: <span className="bolder">{`${product.price}\u20AC`}</span></CardText>
         <div className="footer-card">
           <div className="select-form">

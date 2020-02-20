@@ -8,7 +8,7 @@ import Footer from '../footer'
 
 const Cart = (props) => {
 
- const [clicked, updateClicked] = useState(false)
+ const [sort, updateSort] = useState('')
 
   const duplicateProduct = product => {
      return(
@@ -35,14 +35,30 @@ const Cart = (props) => {
     return 0;
   }
 
+  const reverseSortByName = (product1, product2) => {
+    if (product1.name > product2.name) {
+      return -1;
+    }
+    if (product2.name > product1.name) {
+      return 1;
+    }
+    return 0;
+  }
+
   const sortByPrice = (product1, product2) => {
     return product1.price - product2.price
   }
 
-  const productFiltered = removeDuplicates(props.productStore,'id','size')
-  const copyProductFiltered = [...productFiltered]
-  const productSorted = copyProductFiltered.sort(sortByName)
+  const reverseSortByPrice = (product1, product2) => {
+    return product2.price - product1.price
+  }
 
+  const productFiltered = removeDuplicates(props.productStore,'id','size')
+
+  const productSorted = [...productFiltered].sort(sortByName)
+  const reverseSorted = [...productFiltered].sort(reverseSortByName)
+  const productSortedPrice = [...productFiltered].sort(sortByPrice)
+  const reverseSortedPrice = [...productFiltered].sort(reverseSortByPrice)
 
   const rowRendered = (product, index) => {
     return (
@@ -55,8 +71,21 @@ const Cart = (props) => {
       </tr>
     )
   }
-
-  const mapProductStore = clicked? productSorted.map(rowRendered) : productFiltered.map(rowRendered)
+  // clicked ? productSorted.map(rowRendered) : productFiltered.map(rowRendered)
+  const mapProductStore = () =>{
+    switch (sort) {
+    case 'NAME':
+      return productSorted.map(rowRendered);
+    case 'REVERSENAME':
+      return reverseSorted.map(rowRendered);
+    case 'PRICE':
+      return productSortedPrice.map(rowRendered);
+    case 'REVERSEPRICE':
+      return reverseSortedPrice.map(rowRendered);
+    default:
+      return productFiltered.map(rowRendered);
+    }
+  }
 
   let totalPrice = props.productStore.map(product => product.price).reduce((total, currentPrice) => {
     return total + currentPrice
@@ -67,15 +96,15 @@ const Cart = (props) => {
         <Table className="table-cart">
             <thead>
                 <tr>
-              <th>Model <img onClick={(e) => clicked ? updateClicked(false):updateClicked(true)} src="./assets/sort.png" alt="sort" width="25px" height="25px"></img></th>
+              <th>Model <img onClick={(e) => sort === 'NAME' ? updateSort('REVERSENAME'):updateSort('NAME')} src="./assets/sort.png" alt="sort" width="25px" height="25px"></img></th>
                     <th>SKU</th>
                     <th>Size</th>
                     <th>Qty</th>
-                    <th>Price <img src="./assets/sort.png" alt="sort" width="25px" height="25px"></img></th>
+              <th>Price <img onClick={(e) => sort === 'PRICE' ? updateSort('REVERSEPRICE') : updateSort('PRICE')} src="./assets/sort.png" alt="sort" width="25px" height="25px"></img></th>
                 </tr>
             </thead>
             <tbody>
-              {mapProductStore}
+              {mapProductStore()}
             </tbody>
         </Table>
         <div className="total-cart">
