@@ -73,7 +73,7 @@ const Cart = (props) => {
   const rowRendered = (product, index) => {
     return (
       <tr key={index}>
-        <td>{product.name}<ButtonRemove productStore={product} removeItem={props.decrement} /></td>
+        <td><div className="container-td-name"><div className="td-name">{`RayBan ${product.name}`}</div><ButtonRemove productStore={product} removeItem={props.decrement} /></div></td>
         <td>{product.sku}</td>
         <td>{product.size}</td>
         <td>{duplicateProduct(product)}</td>
@@ -102,8 +102,10 @@ const Cart = (props) => {
   }, 0)
 
     return (
-      <div className="cart">
+    <div className="cart">
         <SubHeader titleAvaible="CART" productAvaible={`${fiteredById(props.productStore, 'id').length} products added`}/>
+      <div className="table-border">
+        <h3>Your Cart contains :</h3>
         <Table className="table-cart">
             <thead>
                 <tr>
@@ -118,11 +120,12 @@ const Cart = (props) => {
               {mapProductStore()}
             </tbody>
         </Table>
+      </div>
         <div className="total-cart">
-          <p>Total piecies:{props.productStore.length}</p>
-          <p>Total price:{` \u20AC ${totalPrice}`}</p>
+          <p>Total piecies:<span className="bolder">{props.productStore.length}</span></p>
+          <p>Total price:<span className="bolder">{` \u20AC ${totalPrice}`}</span></p>
         </div>
-        <Footer productAdded={`${fiteredById(props.productStore, 'id').length}Product added`} path="/orderprocessed" textButton="Checkout"/>
+        <Footer productAdded={`${fiteredById(props.productStore, 'id').length} Product added`} path="/orderprocessed" textButton="Checkout"/>
       </div>
     );
 }

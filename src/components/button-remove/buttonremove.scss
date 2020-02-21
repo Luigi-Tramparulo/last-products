@@ -2,13 +2,14 @@
   color: red;
   display: flex;
   align-items: center;
+  margin-left: 1rem;
   cursor: pointer;
   .circle {
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0.5rem;
-    border: 1px solid red;
+    border: 1px solid #C16464;
     border-radius: 50%;
     width: 1.5rem;
     height: 1.5rem;

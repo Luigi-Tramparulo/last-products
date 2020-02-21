@@ -13,11 +13,11 @@ const Footer = (props) => {
   }}
 
     return (
-        <div className="footer">
+      <div className={props.textButton === 'Checkout' ? `footer footer-display-between` : `footer footer-display-end`}>
           {checkBack()}
           <div className="footer-right">
             {props.productAdded}
-            <Buttons path = {props.path} textButton={props.textButton} />
+            <Buttons resetter ={()=>props.reset} checkDisabled={props.disabled} path = {props.path} textButton={props.textButton} />
           </div>
         </div>
     )

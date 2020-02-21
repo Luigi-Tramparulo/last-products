@@ -54,7 +54,7 @@ const ProductCard = (props) => {
       <CardBody>
         <CardTitle>{`RayBan ${product.name}`}</CardTitle>
         <CardSubtitle>{product.sku}</CardSubtitle>
-        <CardText>Qty: <span className="bolder">{`${totalQuantity}`}</span>{checkLastPiece(totalQuantity)}</CardText>
+        <CardText>Qty: <span className="bolder">{`${totalQuantity} `}</span>{checkLastPiece(totalQuantity)}</CardText>
         <CardText>Price: <span className="bolder">{`\u20AC ${product.price}`}</span></CardText>
         <div className="footer-card">
           <div className="select-form">
