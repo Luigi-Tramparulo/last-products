@@ -2,7 +2,7 @@ import React from 'react'
 import Home from './Home'
 import Checkout from './Checkout'
 import ProcessingOrder from './ProcessingOrder'
-import { Switch, Route, BrowserRouter as Router,withRouter} from 'react-router-dom'
+import { Switch, Route, BrowserRouter as Router, withRouter } from 'react-router-dom'
 
 const Routes = () => {
   return (
@@ -20,7 +20,7 @@ const Routes = () => {
           exact
           path="/orderprocessed"
           component={ProcessingOrder} />
-        </Switch>
+      </Switch>
     </Router>
   )
 }

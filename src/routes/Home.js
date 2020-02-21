@@ -6,8 +6,8 @@ import Header from '../components/header'
 const Home = () => {
   return (
     <div>
-        <Header />
-        <Lens products={products} />
+      <Header />
+      <Lens products={products} />
     </div>
   )
 }

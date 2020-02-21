@@ -2,22 +2,22 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { actions } from '../../redux/actions'
 import Footer from '../footer'
-import { Button } from 'reactstrap';
+import Buttons from '../button';
 import './ordercomplete.scss'
 
+//passiamo la funzione dispatch reset al Button e al componente footer che renderizza a sua volta un altro button
+
 const OrderComplete = (props) => {
-  const {reset} =props
+  const { reset } = props
   return (
     <div className="order-complete">
       <h1>Thank you!</h1>
       <h2>Your{` ${props.productStore.length}`} products will be shipped soon</h2>
-      <Button className="button-buy" onClick={() => reset()}>By More</Button>
-      <Footer reset={props.reset} textButton={`Buy more`} path="/" />
+      <Buttons path="/" resetter={reset} textButton={'Buy More'}> </Buttons>
+      <Footer resetter={reset} textButton={`Buy more`} path="/" />
     </div>
   )
 }
-
-//il componente buttons ha problemi con l'azione dispatch reset
 
 const mapDispatchToProps = dispatch => {
   return {

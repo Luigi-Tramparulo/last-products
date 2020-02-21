@@ -1,6 +1,7 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import { Table } from 'reactstrap'
 import { connect } from 'react-redux'
+import { products } from '../../costants'
 import './cart.scss'
 import { actions } from '../../redux/actions'
 import ButtonRemove from '../button-remove'
@@ -9,14 +10,16 @@ import Footer from '../footer'
 
 const Cart = (props) => {
 
- const [sort, updateSort] = useState('')
+  //definiamo uno stato che viene aggiornato quando l'utente vuole ordinare per prezzo o per nome
+  const [sort, updateSort] = useState('')
 
+  //funzione di callback che ci restituisce la lunghezza della quanità dei prodotti nello store con stessa id e taglia
   const duplicateProduct = product => {
-     return(
-       props.productStore.filter(item => {
+    return (
+      props.productStore.filter(item => {
         return item.id === product.id && item.size === product.size
-        }).length
-     )
+      }).length
+    )
   }
   const fiteredById = (array, id) => {
     return array.filter((obj, index, self) =>
@@ -25,6 +28,8 @@ const Cart = (props) => {
       ))
     )
   }
+
+  //funzione di callback che rimuove i prodotti con stessa size e id
   const removeDuplicates = (array, id, size) => {
     return array.filter((obj, index, self) =>
       index === self.findIndex((el) => (
@@ -33,6 +38,7 @@ const Cart = (props) => {
     )
   }
 
+  //funzioni di callback per ordinare per nome
   const sortByName = (product1, product2) => {
     if (product2.name > product1.name) {
       return -1;
@@ -42,7 +48,6 @@ const Cart = (props) => {
     }
     return 0;
   }
-
   const reverseSortByName = (product1, product2) => {
     if (product1.name > product2.name) {
       return -1;
@@ -53,47 +58,52 @@ const Cart = (props) => {
     return 0;
   }
 
+  //funzioni di callback per ordinare per prezzo
   const sortByPrice = (product1, product2) => {
     return product1.price - product2.price
   }
-
   const reverseSortByPrice = (product1, product2) => {
     return product2.price - product1.price
   }
 
+  //array di prodotti dello store filtrati per id e size
+  const productFiltered = removeDuplicates(props.productStore, 'id', 'size')
 
-
-  const productFiltered = removeDuplicates(props.productStore,'id','size')
-
+  //array di prodotti dello store filtrati in base all'ordinamento di prezzo o nome
   const productSorted = [...productFiltered].sort(sortByName)
   const reverseSorted = [...productFiltered].sort(reverseSortByName)
   const productSortedPrice = [...productFiltered].sort(sortByPrice)
   const reverseSortedPrice = [...productFiltered].sort(reverseSortByPrice)
 
+  //funzione di callback da utilizzare nel mapping degli array filtrati, che mostra ogni riga
   const rowRendered = (product, index) => {
+    const displayAddProduct = <img onClick={(e) => props.add(product)} src="./assets/addcart.png" width="60px" alt="addcart"></img>
+    const quantityStore = duplicateProduct(product)
+    const quantity = products.find(item => item.id === product.id).sizes.find(size => size.size === product.size).quantity
     return (
       <tr key={index}>
         <td><div className="container-td-name"><div className="td-name">{`RayBan ${product.name}`}</div><ButtonRemove productStore={product} removeItem={props.decrement} /></div></td>
         <td>{product.sku}</td>
         <td>{product.size}</td>
-        <td>{duplicateProduct(product)}</td>
+        <td>{quantityStore}{quantityStore < quantity ? displayAddProduct : null}</td>
         <td>{`\u20AC ${product.price}`}</td>
       </tr>
     )
   }
-  // clicked ? productSorted.map(rowRendered) : productFiltered.map(rowRendered)
-  const mapProductStore = () =>{
+
+  //funzione di mapping in base alla selezione dell'utente, di default verrà mostrato l'ordine con cui l'utente ha aggiunto i prodotti nello store
+  const mapProductStore = () => {
     switch (sort) {
-    case 'NAME':
-      return productSorted.map(rowRendered);
-    case 'REVERSENAME':
-      return reverseSorted.map(rowRendered);
-    case 'PRICE':
-      return productSortedPrice.map(rowRendered);
-    case 'REVERSEPRICE':
-      return reverseSortedPrice.map(rowRendered);
-    default:
-      return productFiltered.map(rowRendered);
+      case 'NAME':
+        return productSorted.map(rowRendered);
+      case 'REVERSENAME':
+        return reverseSorted.map(rowRendered);
+      case 'PRICE':
+        return productSortedPrice.map(rowRendered);
+      case 'REVERSEPRICE':
+        return reverseSortedPrice.map(rowRendered);
+      default:
+        return productFiltered.map(rowRendered);
     }
   }
 
@@ -101,40 +111,39 @@ const Cart = (props) => {
     return total + currentPrice
   }, 0)
 
-    return (
+  return (
     <div className="cart">
-        <SubHeader titleAvaible="CART" productAvaible={`${fiteredById(props.productStore, 'id').length} products added`}/>
+      <SubHeader titleAvaible="CART" productAvaible={`${fiteredById(props.productStore, 'id').length} products added`} />
       <div className="table-border">
         <h3>Your Cart contains :</h3>
         <Table className="table-cart">
-            <thead>
-                <tr>
-              <th>Model <img onClick={(e) => sort === 'NAME' ? updateSort('REVERSENAME'):updateSort('NAME')} src="./assets/sort.png" alt="sort" width="25px" height="25px"></img></th>
-                    <th>SKU</th>
-                    <th>Size</th>
-                    <th>Qty</th>
+          <thead>
+            <tr>
+              <th>Model <img onClick={(e) => sort === 'NAME' ? updateSort('REVERSENAME') : updateSort('NAME')} src="./assets/sort.png" alt="sort" width="25px" height="25px"></img></th>
+              <th>SKU</th>
+              <th>Size</th>
+              <th>Qty</th>
               <th>Price <img onClick={(e) => sort === 'PRICE' ? updateSort('REVERSEPRICE') : updateSort('PRICE')} src="./assets/sort.png" alt="sort" width="25px" height="25px"></img></th>
-                </tr>
-            </thead>
-            <tbody>
-              {mapProductStore()}
-            </tbody>
+            </tr>
+          </thead>
+          <tbody>
+            {mapProductStore()}
+          </tbody>
         </Table>
       </div>
-        <div className="total-cart">
-          <p>Total piecies:<span className="bolder">{props.productStore.length}</span></p>
-          <p>Total price:<span className="bolder">{` \u20AC ${totalPrice}`}</span></p>
-        </div>
-        <Footer productAdded={`${fiteredById(props.productStore, 'id').length} Product added`} path="/orderprocessed" textButton="Checkout"/>
+      <div className="total-cart">
+        <p>Total piecies:<span className="bolder">{props.productStore.length}</span></p>
+        <p>Total price:<span className="bolder">{` \u20AC ${totalPrice}`}</span></p>
       </div>
-    );
+      <Footer productAdded={`${fiteredById(props.productStore, 'id').length} Product added`} path="/orderprocessed" textButton="Checkout" />
+    </div>
+  );
 }
-
-
 
 const mapDispatchToProps = dispatch => {
   return {
     decrement: (item, id) => dispatch(actions('REMOVE', item, id)),
+    add: item => dispatch(actions('ADD', item)),
   }
 }
 const mapStateToProps = (state) => {
