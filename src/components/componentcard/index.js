@@ -9,7 +9,7 @@ const ProductCard = (props) => {
   const { product, add, productStore } = props
   const options = product.sizes.map((size, i) => {
     return (
-      <option key={i} value={size.size}>{`${size.size} (${size.quantity})`}</option>
+      <option key={i} value={size.size}>{`${size.size} (${size.quantity} pcs)`}</option>
     )
   })
   //stato per tenere traccia della size selezionata
@@ -61,7 +61,7 @@ const ProductCard = (props) => {
       <CardBody>
         <CardTitle>{`RayBan ${product.name}`}</CardTitle>
         <CardSubtitle>{product.sku}</CardSubtitle>
-        <CardText>Qty: <span className="bolder">{`${totalQuantity} `}</span>{checkLastPiece(totalQuantity)}</CardText>
+        <CardText>Qty: <span className={"bolder"+ (totalQuantity === 1 ? " color-red" : null)}>{`${totalQuantity} `}</span>{checkLastPiece(totalQuantity)}</CardText>
         <CardText>Price: <span className="bolder">{`\u20AC ${product.price}`}</span></CardText>
         <div className="footer-card">
           <div className="select-form">

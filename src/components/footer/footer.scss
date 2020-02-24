@@ -4,12 +4,16 @@
     .footer-display-between{
       justify-content: space-between;
     }
+.container-footer{
+    margin-top: 2rem;
+    margin: auto;
+}
 .footer{
     background-color: white;
     display: flex;
     flex-direction: row;
     align-items: center;
-    border: 2px solid #B0B0B0;
+    border-top: 2px solid #B0B0B0;
     padding: 1.2rem 0;
 
     .back-container{

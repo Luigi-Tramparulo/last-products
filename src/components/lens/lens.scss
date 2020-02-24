@@ -2,6 +2,10 @@
   width: 80%;
   margin: auto;
 
+  .color-red{
+    color:red;
+  }
+
   .product-list {
     display: flex;
     justify-content: center;
@@ -34,7 +38,6 @@
     }
     .bolder{
       font-weight: bolder;
-      color: #4d4d4d
     }
     .footer-card {
       display: flex;
@@ -61,3 +64,42 @@
     }
   }
 }
+
+//responsive
+
+@media only screen and (max-width: 1920px) {
+  .lens-view{
+    .product-list{
+      display: flex;
+      flex-wrap: wrap;
+      .card{
+        max-width: 30%;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .lens-view{
+    .product-list{
+      display: flex;
+      flex-wrap: wrap;
+      .card{
+        max-width: 40%;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 868px) {
+  .lens-view{
+    .product-list{
+      display: flex;
+      flex-wrap: wrap;
+      .card{
+        max-width: 100%;
+      }
+    }
+  }
+}
+

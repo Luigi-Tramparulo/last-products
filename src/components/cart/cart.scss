@@ -1,65 +1,72 @@
-.cart{
-    width: 80%;
+.cart {
+  width: 80%;
+  margin: auto;
+  position: relative;
+
+  .table-border {
+    border: 0.5px solid black;
+    margin-top: 0.7rem;
+    border-radius: 0.7rem;
+    padding: 2rem 0;
+    & > h3 {
+      font-size: 1.6rem;
+      font-weight: bolder;
+      margin-left: 1.5rem;
+      padding: 1.5rem 0;
+      color: #555555;
+    }
+  }
+
+  .table-cart {
+    border-collapse: collapse;
+    text-align: left;
+    width: 98%;
     margin: auto;
 
-    .table-border{
-      border: 2px solid black;
-      margin-top: 0.7rem;
-      border-radius: 0.2rem;
-      padding: 2rem 0;
-      & > h3{
-        font-size: 1.6rem;
-        font-weight: bolder;
-        margin-left: 1.5rem;
-        padding: 1.5rem 0;
-        color: #555555;
-      }
+    th {
+      color: #b8b8b8;
     }
 
-    .table-cart{
-        border-collapse: collapse;
-        text-align: left;
-        width: 98%;
-        margin: auto;
-
-        th{
-          color: #B8B8B8;
-        }
-
-      th, td {
-        border-right: 0.5px solid black;
-        padding: 1rem;
-        vertical-align: middle;
-      }
-      th, tr{
-        border-bottom: 0.5px solid black;
-      }
-      td:last-child{
-        border-right: none;
-      }
-      th:last-child{
-        border-right: none;
-      }
-      tr:last-child{
-        border-bottom: none;
+    th,
+    td {
+      border-right: 0.5px solid black;
+      padding: 1rem;
+      vertical-align: middle;
+      & > img {
+        padding: 0.2rem;
+        margin-left: 2rem;
       }
     }
-    .container-td-name{
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
+    th,
+    tr {
+      border-bottom: 0.5px solid black;
     }
-    .total-cart{
-      margin: 2rem auto;
-      .bolder{
-        font-weight: bolder;
-      }
-        & > p{
-          font-size: 1.3rem;
-          font-weight: normal;
-          text-align: right;
-          text-decoration: underline;
-        }
-      }
+    td:last-child {
+      border-right: none;
+    }
+    th:last-child {
+      border-right: none;
+    }
+    tr:last-child {
+      border-bottom: none;
+    }
+  }
+  .container-td-name {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .total-cart {
+    margin: 2rem auto;
+    .bolder {
+      font-weight: bolder;
+    }
+    & > p {
+      font-size: 1.3rem;
+      font-weight: normal;
+      text-align: right;
+      text-decoration: underline;
+    }
+  }
 }

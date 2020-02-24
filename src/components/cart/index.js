@@ -3,7 +3,7 @@ import { Table } from 'reactstrap'
 import { connect } from 'react-redux'
 import { products } from '../../costants'
 import './cart.scss'
-import { actions } from '../../redux/actions'
+import { actions, ADD, REMOVE } from '../../redux/actions'
 import ButtonRemove from '../button-remove'
 import SubHeader from '../subheader'
 import Footer from '../footer'
@@ -103,7 +103,7 @@ const Cart = (props) => {
       case 'REVERSEPRICE':
         return reverseSortedPrice.map(rowRendered);
       default:
-        return productFiltered.map(rowRendered);
+        return productSorted.map(rowRendered);
     }
   }
 
@@ -142,8 +142,8 @@ const Cart = (props) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    decrement: (item, id) => dispatch(actions('REMOVE', item, id)),
-    add: item => dispatch(actions('ADD', item)),
+    decrement: (item, id) => dispatch(actions(REMOVE, item, id)),
+    add: item => dispatch(actions(ADD, item)),
   }
 }
 const mapStateToProps = (state) => {
