@@ -3,6 +3,10 @@
   margin: auto;
   position: relative;
 
+  .transform-arrow{
+    transform: rotate(180deg);
+  }
+
   .container-qty-col{
     display: table;
     vertical-align: middle;
@@ -33,6 +37,9 @@
 
     th {
       color: #b8b8b8;
+      & > svg{
+        cursor: pointer;
+      }
     }
 
     th,

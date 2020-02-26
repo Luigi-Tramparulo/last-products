@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { products } from '../../costants'
 import './cart.scss'
 import { actions, ADD, REMOVE } from '../../redux/actions'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import ButtonRemove from '../button-remove'
 import ButtonAdd from '../button-add'
 import SubHeader from '../subheader'
@@ -57,6 +59,14 @@ const Cart = (props) => {
       return 1;
     }
     return 0;
+  }
+
+  //Arrow icon
+  const transformArrow = state => sort === state ? 0 : 180
+
+  //update sort state
+  const sortBy = (initialState, reverse) =>{
+    sort === initialState ? updateSort(reverse) : updateSort(initialState)
   }
 
   //funzioni di callback per ordinare per prezzo
@@ -129,11 +139,11 @@ const Cart = (props) => {
         <Table className="table-cart">
           <thead>
             <tr>
-              <th>Model <img onClick={(e) => sort === 'NAME' ? updateSort('REVERSENAME') : updateSort('NAME')} src="./assets/sort.png" alt="sort" width="25px" height="25px"></img></th>
+              <th>Model <FontAwesomeIcon rotation={transformArrow('REVERSENAME')} icon={faArrowUp} onClick={(e) => sortBy('NAME','REVERSENAME')} /></th>
               <th>SKU</th>
               <th>Size</th>
               <th>Qty</th>
-              <th>Price <img onClick={(e) => sort === 'PRICE' ? updateSort('REVERSEPRICE') : updateSort('PRICE')} src="./assets/sort.png" alt="sort" width="25px" height="25px"></img></th>
+              <th>Price <FontAwesomeIcon rotation={transformArrow('REVERSEPRICE')} icon={faArrowUp} onClick={(e) => sortBy('PRICE','REVERSEPRICE')} /></th>
             </tr>
           </thead>
           <tbody>
