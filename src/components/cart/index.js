@@ -5,6 +5,7 @@ import { products } from '../../costants'
 import './cart.scss'
 import { actions, ADD, REMOVE } from '../../redux/actions'
 import ButtonRemove from '../button-remove'
+import ButtonAdd from '../button-add'
 import SubHeader from '../subheader'
 import Footer from '../footer'
 
@@ -75,18 +76,27 @@ const Cart = (props) => {
   const productSortedPrice = [...productFiltered].sort(sortByPrice)
   const reverseSortedPrice = [...productFiltered].sort(reverseSortByPrice)
 
+  //funzione per rimuovere tutta la quantità dell'ogetto nel carrello e quandi rimouvere l'oggetto dallo store
+  const removeItem = (qty,item) => {
+    for (let i=0; i<qty; i++){
+      props.decrement(item.id)
+    }
+  }
+
   //funzione di callback da utilizzare nel mapping degli array filtrati, che mostra ogni riga
   const rowRendered = (product, index) => {
-    const displayAddProduct = <img onClick={(e) => props.add(product)} src="./assets/addcart.png" width="60px" alt="addcart"></img>
+
     const quantityStore = duplicateProduct(product)
     const quantity = products.find(item => item.id === product.id).sizes.find(size => size.size === product.size).quantity
     return (
       <tr key={index}>
-        <td><div className="container-td-name"><div className="td-name">{`RayBan ${product.name}`}</div><ButtonRemove productStore={product} removeItem={props.decrement} /></div></td>
+        <td><div className="container-td-name"><div className="td-name">{`RayBan ${product.name}`}</div>
+        <span className="color-red" onClick={()=> removeItem(quantityStore,product.id)}>Remove</span></div></td>
         <td>{product.sku}</td>
         <td>{product.size}</td>
-        <td>{quantityStore}{quantityStore < quantity ? displayAddProduct : null}</td>
-        <td>{`\u20AC ${product.price}`}</td>
+        <td><div className="container-qty-col"><ButtonRemove productStore={product} removeItem={props.decrement} /><span>{quantityStore}</span>
+          {quantityStore < quantity ? <ButtonAdd addItem={() => props.add(product)} /> : null}</div></td>
+          <td>{`\u20AC ${product.price}`}</td>
       </tr>
     )
   }
@@ -152,4 +162,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)

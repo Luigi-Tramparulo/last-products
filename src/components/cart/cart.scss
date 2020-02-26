@@ -3,6 +3,14 @@
   margin: auto;
   position: relative;
 
+  .container-qty-col{
+    display: table;
+    vertical-align: middle;
+    & > div {
+      margin: 0 0.3rem;
+    }
+  }
+
   .table-border {
     border: 0.5px solid black;
     margin-top: 0.7rem;
@@ -32,10 +40,6 @@
       border-right: 0.5px solid black;
       padding: 1rem;
       vertical-align: middle;
-      & > img {
-        padding: 0.2rem;
-        margin-left: 2rem;
-      }
     }
     th,
     tr {
@@ -56,6 +60,9 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    & > span{
+      cursor: pointer;
+    }
   }
   .total-cart {
     margin: 2rem auto;
