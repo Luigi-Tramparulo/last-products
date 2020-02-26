@@ -89,7 +89,7 @@ const Cart = (props) => {
   //funzione per rimuovere tutta la quantità dell'ogetto nel carrello e quandi rimouvere l'oggetto dallo store
   const removeItem = (qty,item) => {
     for (let i=0; i<qty; i++){
-      props.decrement(item,item.id)
+      props.decrement(item)
     }
   }
 
@@ -104,7 +104,7 @@ const Cart = (props) => {
         <span className="color-red" onClick={()=> removeItem(quantityStore,product.id)}>Remove</span></div></td>
         <td>{product.sku}</td>
         <td>{product.size}</td>
-        <td><div className="container-qty-col"><ButtonRemove productStore={product} removeItem={()=>props.decrement(product, product.id)} /><span>{quantityStore}</span>
+        <td><div className="container-qty-col"><ButtonRemove productStore={product} removeItem={()=>props.decrement(product)} /><span>{quantityStore}</span>
           {quantityStore < quantity ? <ButtonAdd addItem={() => props.add(product)} /> : null}</div></td>
           <td>{`\u20AC ${product.price}`}</td>
       </tr>
@@ -162,7 +162,7 @@ const Cart = (props) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    decrement: (item, id) => dispatch(actions(REMOVE, item, id)),
+    decrement: (item) => dispatch(actions(REMOVE, item)),
     add: item => dispatch(actions(ADD, item)),
   }
 }

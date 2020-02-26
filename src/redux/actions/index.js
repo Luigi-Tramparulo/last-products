@@ -1,8 +1,7 @@
-export const actions = (type, item, id) => {
+export const actions = (type, item) => {
     return {
         type: type,
         item: item,
-        id: id
     }
 }
 
