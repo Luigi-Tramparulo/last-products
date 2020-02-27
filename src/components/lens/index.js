@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import ProductCard from '../componentcard'
 import './lens.scss'
-import { actions, ADD } from '../../redux/actions'
+import { add } from '../../redux/actions'
 import SubHeader from '../subheader'
 import Footer from '../footer'
 
@@ -29,11 +29,10 @@ const Lens = (props) => {
   )
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    add: item => dispatch(actions(ADD, item)),
-  }
+const mapDispatchToProps = {
+  add,
 }
+
 const mapStateToProps = (state) => {
   return {
     productStore: state.products

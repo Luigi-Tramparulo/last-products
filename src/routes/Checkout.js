@@ -5,10 +5,10 @@ import { products } from '../costants'
 
 const Checkout = () => {
   return (
-    <div>
+    <>
       <Header />
       <Cart products={products} />
-    </div>
+    </>
   )
 }
 

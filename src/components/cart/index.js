@@ -3,7 +3,7 @@ import { Table } from 'reactstrap'
 import { connect } from 'react-redux'
 import { products } from '../../costants'
 import './cart.scss'
-import { actions, ADD, REMOVE } from '../../redux/actions'
+import { add } from '../../redux/actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import ButtonRemove from '../button-remove'
@@ -65,7 +65,7 @@ const Cart = (props) => {
   const transformArrow = state => sort === state ? 0 : 180
 
   //update sort state
-  const sortBy = (initialState, reverse) =>{
+  const sortBy = (initialState, reverse) => {
     sort === initialState ? updateSort(reverse) : updateSort(initialState)
   }
 
@@ -87,8 +87,8 @@ const Cart = (props) => {
   const reverseSortedPrice = [...productFiltered].sort(reverseSortByPrice)
 
   //funzione per rimuovere tutta la quantità dell'ogetto nel carrello e quandi rimouvere l'oggetto dallo store
-  const removeItem = (qty,item) => {
-    for (let i=0; i<qty; i++){
+  const removeItem = (qty, item) => {
+    for (let i = 0; i < qty; i++) {
       props.decrement(item)
     }
   }
@@ -101,12 +101,12 @@ const Cart = (props) => {
     return (
       <tr key={index}>
         <td><div className="container-td-name"><div className="td-name">{`RayBan ${product.name}`}</div>
-        <span className="color-red" onClick={()=> removeItem(quantityStore,product.id)}>Remove</span></div></td>
+          <span className="color-red" onClick={() => removeItem(quantityStore, product.id)}>Remove</span></div></td>
         <td>{product.sku}</td>
         <td>{product.size}</td>
-        <td><div className="container-qty-col"><ButtonRemove productStore={product} removeItem={()=>props.decrement(product)} /><span>{quantityStore}</span>
+        <td><div className="container-qty-col"><ButtonRemove productStore={product} removeItem={() => props.decrement(product)} /><span>{quantityStore}</span>
           {quantityStore < quantity ? <ButtonAdd addItem={() => props.add(product)} /> : null}</div></td>
-          <td>{`\u20AC ${product.price}`}</td>
+        <td>{`\u20AC ${product.price}`}</td>
       </tr>
     )
   }
@@ -139,11 +139,11 @@ const Cart = (props) => {
         <Table className="table-cart">
           <thead>
             <tr>
-              <th>Model <FontAwesomeIcon rotation={transformArrow('REVERSENAME')} icon={faArrowUp} onClick={(e) => sortBy('NAME','REVERSENAME')} /></th>
+              <th>Model <FontAwesomeIcon rotation={transformArrow('REVERSENAME')} icon={faArrowUp} onClick={(e) => sortBy('NAME', 'REVERSENAME')} /></th>
               <th>SKU</th>
               <th>Size</th>
               <th>Qty</th>
-              <th>Price <FontAwesomeIcon rotation={transformArrow('REVERSEPRICE')} icon={faArrowUp} onClick={(e) => sortBy('PRICE','REVERSEPRICE')} /></th>
+              <th>Price <FontAwesomeIcon rotation={transformArrow('REVERSEPRICE')} icon={faArrowUp} onClick={(e) => sortBy('PRICE', 'REVERSEPRICE')} /></th>
             </tr>
           </thead>
           <tbody>
@@ -160,11 +160,8 @@ const Cart = (props) => {
   );
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    decrement: (item) => dispatch(actions(REMOVE, item)),
-    add: item => dispatch(actions(ADD, item)),
-  }
+const mapDispatchToProps = {
+  add,
 }
 const mapStateToProps = (state) => {
   return {

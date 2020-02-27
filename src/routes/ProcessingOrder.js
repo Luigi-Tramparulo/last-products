@@ -4,10 +4,10 @@ import Header from '../components/header'
 
 const ProcessingOrder = () => {
   return (
-    <div>
+    <>
       <Header />
       <OrderComplete />
-    </div>
+    </>
   )
 }
 

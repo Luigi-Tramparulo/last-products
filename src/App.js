@@ -10,8 +10,6 @@ function App() {
     <Provider store={store}>
       <Router>
         <Routes />
-        <div className="App">
-        </div>
       </Router>
     </Provider>
   );
