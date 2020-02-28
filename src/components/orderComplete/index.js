@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { actions, RESET } from '../../redux/actions'
+import { reset } from '../../redux/actions'
 import Footer from '../footer'
 import Buttons from '../button';
 import './ordercomplete.scss'
@@ -19,10 +19,8 @@ const OrderComplete = (props) => {
   )
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    reset: () => dispatch(actions(RESET)),
-  }
+const mapDispatchToProps = {
+ reset
 }
 
 const mapStateToProps = (state) => {

@@ -6,13 +6,27 @@ export const RESET = 'RESET'
 export function add(item) {
   return {
     type: ADD,
-    item
+    payload: item
+  }
+}
+
+export function remove(item) {
+  return {
+    type: REMOVE,
+    payload: item
+  }
+}
+
+export function reset(item) {
+  return {
+    type: RESET,
+    payload: item
   }
 }
 
 export const actions = (type, item) => {
   return {
     type: type,
-    item: item,
+    payload: item,
   }
 }

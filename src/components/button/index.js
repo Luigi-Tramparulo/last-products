@@ -5,7 +5,7 @@ import './button.scss'
 
 const Buttons = (props) => {
   return (
-    <div>
+    <div className="align-center">
       <Link to={props.path}>
         <Button onClick={props.resetter} disabled={props.checkDisabled} className="button-buy">{props.textButton}</Button>
       </Link>

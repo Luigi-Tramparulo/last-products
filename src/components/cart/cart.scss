@@ -1,7 +1,16 @@
 .cart {
   width: 80%;
   margin: auto;
+  min-height:85vh;
   position: relative;
+
+
+    .align-center{
+      display: flex;
+      justify-content: center;
+      margin-top: 5rem;
+    }
+
 
   .transform-arrow{
     transform: rotate(180deg);

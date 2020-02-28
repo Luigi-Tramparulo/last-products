@@ -3,9 +3,10 @@ import { Table } from 'reactstrap'
 import { connect } from 'react-redux'
 import { products } from '../../costants'
 import './cart.scss'
-import { add } from '../../redux/actions'
+import { add,remove } from '../../redux/actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
+import Button from '../button'
 import ButtonRemove from '../button-remove'
 import ButtonAdd from '../button-add'
 import SubHeader from '../subheader'
@@ -89,7 +90,7 @@ const Cart = (props) => {
   //funzione per rimuovere tutta la quantità dell'ogetto nel carrello e quandi rimouvere l'oggetto dallo store
   const removeItem = (qty, item) => {
     for (let i = 0; i < qty; i++) {
-      props.decrement(item)
+      props.remove(item)
     }
   }
 
@@ -101,10 +102,10 @@ const Cart = (props) => {
     return (
       <tr key={index}>
         <td><div className="container-td-name"><div className="td-name">{`RayBan ${product.name}`}</div>
-          <span className="color-red" onClick={() => removeItem(quantityStore, product.id)}>Remove</span></div></td>
+          <span className="color-red" onClick={() => removeItem(quantityStore, product)}>Remove</span></div></td>
         <td>{product.sku}</td>
         <td>{product.size}</td>
-        <td><div className="container-qty-col"><ButtonRemove productStore={product} removeItem={() => props.decrement(product)} /><span>{quantityStore}</span>
+        <td><div className="container-qty-col"><ButtonRemove productStore={product} removeItem={() => props.remove(product)} /><span>{quantityStore}</span>
           {quantityStore < quantity ? <ButtonAdd addItem={() => props.add(product)} /> : null}</div></td>
         <td>{`\u20AC ${product.price}`}</td>
       </tr>
@@ -132,8 +133,12 @@ const Cart = (props) => {
   }, 0)
 
   return (
+
     <div className="cart">
       <SubHeader titleAvaible="CART" productAvaible={`${fiteredById(props.productStore, 'id').length} products added`} />
+
+      {props.productStore.length > 0 ?
+
       <div className="table-border">
         <h3>Your Cart contains :</h3>
         <Table className="table-cart">
@@ -151,17 +156,21 @@ const Cart = (props) => {
           </tbody>
         </Table>
       </div>
+
+        : <Button textButton="Turn back to Store"></Button>
+        }
       <div className="total-cart">
         <p>Total piecies:<span className="bolder">{props.productStore.length}</span></p>
         <p>Total price:<span className="bolder">{` \u20AC ${totalPrice}`}</span></p>
       </div>
-      <Footer productAdded={`${fiteredById(props.productStore, 'id').length} Product added`} path="/orderprocessed" textButton="Checkout" />
+      <Footer disabled={props.productStore.length < 1 ? true : false} productAdded={`${fiteredById(props.productStore, 'id').length} Product added`} path="/orderprocessed" textButton="Checkout" />
     </div>
+
   );
 }
 
 const mapDispatchToProps = {
-  add,
+  add,remove
 }
 const mapStateToProps = (state) => {
   return {

@@ -5,8 +5,11 @@
       justify-content: space-between;
     }
 .container-footer{
-    margin-top: 2rem;
-    margin: auto;
+    position: absolute;
+    height: 5vh;
+    width: 100%;
+    left: 0;
+    bottom: 0;
 }
 .footer{
     background-color: white;
