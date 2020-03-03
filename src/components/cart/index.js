@@ -144,11 +144,25 @@ const Cart = (props) => {
         <Table className="table-cart">
           <thead>
             <tr>
-              <th>Model <FontAwesomeIcon rotation={transformArrow('REVERSENAME')} icon={faArrowUp} onClick={(e) => sortBy('NAME', 'REVERSENAME')} /></th>
+              <th className={sort==='NAME'|| sort==='REVERSENAME' ? 'active':''}>
+                Model
+                <FontAwesomeIcon
+                  rotation={transformArrow('REVERSENAME')}
+                  icon={faArrowUp}
+                  onClick={(e) => sortBy('NAME', 'REVERSENAME')}
+                />
+              </th>
               <th>SKU</th>
               <th>Size</th>
               <th>Qty</th>
-              <th>Price <FontAwesomeIcon rotation={transformArrow('REVERSEPRICE')} icon={faArrowUp} onClick={(e) => sortBy('PRICE', 'REVERSEPRICE')} /></th>
+                <th className={sort === 'PRICE' || sort === 'REVERSEPRICE' ? 'active' : ''}>
+                Price
+                  <FontAwesomeIcon
+                    rotation={transformArrow('REVERSEPRICE')}
+                    icon={faArrowUp}
+                    onClick={(e) => sortBy('PRICE', 'REVERSEPRICE')}
+                  />
+                </th>
             </tr>
           </thead>
           <tbody>
@@ -156,8 +170,7 @@ const Cart = (props) => {
           </tbody>
         </Table>
       </div>
-
-        : <Button textButton="Turn back to Store"></Button>
+        : <Button path="/" textButton="Turn back to Store"></Button>
         }
       <div className="total-cart">
         <p>Total piecies:<span className="bolder">{props.productStore.length}</span></p>
