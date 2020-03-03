@@ -17,16 +17,9 @@ export function remove(item) {
   }
 }
 
-export function reset(item) {
+export function reset() {
   return {
     type: RESET,
-    payload: item
-  }
-}
-
-export const actions = (type, item) => {
-  return {
-    type: type,
-    payload: item,
+    payload: null
   }
 }

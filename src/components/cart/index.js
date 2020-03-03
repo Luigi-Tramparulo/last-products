@@ -106,7 +106,7 @@ const Cart = (props) => {
         <td>{product.sku}</td>
         <td>{product.size}</td>
         <td><div className="container-qty-col"><ButtonRemove productStore={product} removeItem={() => props.remove(product)} /><span>{quantityStore}</span>
-          {quantityStore < quantity ? <ButtonAdd addItem={() => props.add(product)} /> : null}</div></td>
+          {quantityStore < quantity ? <ButtonAdd action={() => props.add(product)} /> : null}</div></td>
         <td>{`\u20AC ${product.price}`}</td>
       </tr>
     )
