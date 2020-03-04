@@ -1,9 +1,9 @@
-    .footer-display-end{
-      justify-content: flex-end;
-    }
-    .footer-display-between{
-      justify-content: space-between;
-    }
+.footer-display-end{
+  justify-content: flex-end;
+}
+.footer-display-between{
+  justify-content: space-between;
+}
 .container-footer{
     position: absolute;
     height: 5vh;
@@ -47,5 +47,15 @@
   }
   & > div {
     padding: 0.5rem;
+  }
+}
+
+//responsive
+
+//responsive
+
+@media only screen and (max-width: 1919px) {
+  .footer{
+    margin-top: 7vh;
   }
 }

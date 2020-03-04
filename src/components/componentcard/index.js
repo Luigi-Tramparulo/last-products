@@ -37,9 +37,20 @@ const ProductCard = (props) => {
     }
   }
 
-  let totalQuantity = 0;
-  const findTotalQuantity = prod => totalQuantity = totalQuantity + prod.quantity;
-  product.sizes.forEach(findTotalQuantity)
+  /*filtro i prodotti nello store con lo stesso ID e ottengo la lunghezza dell'array generato da filter
+    Assegno alla variabile initialQuantity la quantità iniziale del prodotto sommando anche
+    la quantità delle diverse taglie
+    Assegno a totalQuantity la differenza tra la quantità iniziale del prodotto e quella nella store di redux,
+    non facendo ulteriori controlli perchè per l'utente il bottone è disabilitato quando eccede le quantità
+    del prodotto disponibile
+  */
+
+  const storeQuantitySameId = productStore.filter(item => item.id === product.id).length;
+  let initialQuantity = 0;
+  const findInitialQuantity = prod => initialQuantity += prod.quantity;
+  product.sizes.forEach(findInitialQuantity)
+
+  let totalQuantity = initialQuantity - storeQuantitySameId;
 
   //se la quantità del prodotto è inferiore a 4 mostra un testo, se è 1 aggiunge un componente visivo CircleLast
   const textLastpiece = <span className="lastpiece">Last piece, buy it now!</span>
@@ -55,23 +66,49 @@ const ProductCard = (props) => {
   }
 
   return (
-    <Card>
+    <Card
+      className={totalQuantity < 1 ? "not-active" : "active"}>
       {addCircleLast()}
-      <CardImg heigth="100%" width="100%" src={`./assets/${product.name.toLowerCase()}.jpeg`} alt="Card image cap" />
+      <CardImg
+        heigth="100%"
+        width="100%"
+        src={`./assets/${product.name.toLowerCase()}.jpeg`}
+        alt="Card image cap"
+      />
       <CardBody>
         <CardTitle>{`RayBan ${product.name}`}</CardTitle>
         <CardSubtitle>{product.sku}</CardSubtitle>
-        <CardText>Qty: <span className={"bolder"+ (totalQuantity === 1 ? " color-red" : null)}>{`${totalQuantity} `}</span>{checkLastPiece(totalQuantity)}</CardText>
-        <CardText>Price: <span className="bolder">{`\u20AC ${product.price}`}</span></CardText>
+        <CardText>
+          Qty:
+          <span
+            className={"bolder" + (totalQuantity === 1 ? " color-red" : null)}>
+            {`${totalQuantity} `}
+          </span>
+          {checkLastPiece(totalQuantity)}
+        </CardText>
+        <CardText>
+          Price:
+          <span className="bolder">{`\u20AC ${product.price}`}</span>
+        </CardText>
         <div className="footer-card">
           <div className="select-form">
-            <select onChange={handlerSelectChange} value={size}>
+            <select
+              disabled={totalQuantity < 1}
+              onChange={handlerSelectChange}
+              value={size}
+            >
               <option value="0" >Select size</option>
               {options}
             </select>
           </div>
           <div>
-            <Button disabled={checkAdd()} className="button-style" onClick={() => add({ ...product, size })}>Add</Button>
+            <Button
+              disabled={checkAdd()}
+              className="button-style"
+              onClick={() => add({ ...product, size })}
+            >
+              Add
+               </Button>
           </div>
         </div>
       </CardBody>

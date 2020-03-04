@@ -17,6 +17,12 @@
     font-size: 0.9rem;
     color: red;
     }
+    .not-active{
+      opacity: 0.5;
+    }
+    .active{
+      opacity: 1;
+    }
     & > div {
       margin: 1rem 1rem;
     }
