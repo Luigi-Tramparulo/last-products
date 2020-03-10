@@ -15,7 +15,7 @@ import Footer from '../footer'
 const Cart = (props) => {
 
   //definiamo uno stato che viene aggiornato quando l'utente vuole ordinare per prezzo o per nome
-  const [sort, updateSort] = useState('')
+  const [sort, updateSort] = useState('NAME')
 
   //funzione di callback che ci restituisce la lunghezza della quanità dei prodotti nello store con stessa id e taglia
   const duplicateProduct = product => {
@@ -105,9 +105,20 @@ const Cart = (props) => {
           <span className="color-red" onClick={() => removeItem(quantityStore, product)}>Remove</span></div></td>
         <td>{product.sku}</td>
         <td>{product.size}</td>
-        <td><div className="container-qty-col"><ButtonRemove productStore={product} removeItem={() => props.remove(product)} /><span>{quantityStore}</span>
-          {quantityStore < quantity ? <ButtonAdd action={() => props.add(product)} /> : null}</div></td>
-        <td>{`\u20AC ${product.price}`}</td>
+        <td>
+          <div className="container-qty-col">
+            <ButtonRemove
+              productStore={product}
+              removeItem={() => props.remove(product)} />
+            <span>{quantityStore}</span>
+            {
+              quantityStore < quantity ?
+                <ButtonAdd action={() => props.add(product)} /> :
+                null
+            }
+          </div>
+        </td>
+        <td>{`\u20AC${product.price}`}</td>
       </tr>
     )
   }
@@ -173,10 +184,14 @@ const Cart = (props) => {
         : <Button path="/" textButton="Turn back to Store"></Button>
         }
       <div className="total-cart">
-        <p>Total piecies:<span className="bolder">{props.productStore.length}</span></p>
-        <p>Total price:<span className="bolder">{` \u20AC ${totalPrice}`}</span></p>
+        <p>Total piecies: <span className="bolder">{props.productStore.length}</span></p>
+        <p>Total price: <span className="bolder">{` \u20AC${totalPrice}`}</span></p>
       </div>
-      <Footer disabled={props.productStore.length < 1 ? true : false} productAdded={`${fiteredById(props.productStore, 'id').length} Product added`} path="/orderprocessed" textButton="Checkout" />
+      <Footer
+        disabled={props.productStore.length < 1 ? true : false}
+        productAdded={`${fiteredById(props.productStore, 'id').length} Product added`}
+        path="/orderprocessed"
+        textButton="Checkout" />
     </div>
 
   );

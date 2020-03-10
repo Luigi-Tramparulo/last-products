@@ -24,7 +24,7 @@ const Lens = (props) => {
         {mapProducts}
       </div>
       <Footer disabled={productStore.length < 1 ? true : false}
-        productAdded={`Product added:${productStore.length}`} path='/checkout' textButton="Go to cart" />
+        productAdded={`Product added: ${productStore.length}`} path='/checkout' textButton="Go to cart" />
     </div>
   )
 };
