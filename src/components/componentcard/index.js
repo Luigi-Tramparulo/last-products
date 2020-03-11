@@ -7,11 +7,7 @@ import CircleLast from '../circleLast'
 
 const ProductCard = (props) => {
   const { product, add, productStore } = props
-  const options = product.sizes.map((size, i) => {
-    return (
-      <option key={i} value={size.size}>{`${size.size} (${size.quantity} pcs)`}</option>
-    )
-  })
+
   //stato per tenere traccia della size selezionata
   const [size, updateSize] = useState(0)
 
@@ -20,40 +16,82 @@ const ProductCard = (props) => {
     updateSize(parseInt(e.currentTarget.value))
   }
 
-  //funzione di callback per filtrare i prodotti iniziali con la size scelta dall'utente
+  /*
+  funzione di callback per filtrare i prodotti iniziali con la size scelta
+  dall'utente
+  */
   const callBackFilter = item => {
     return item.size === size
   }
-  //controlla la quantità disponibile per ogni prodotto, se l'utente non ha scelto nulla la size è undefined
+  /*controlla la quantità disponibile per ogni prodotto, se l'utente non ha
+  scelto nulla la size è undefined
+  */
   const quantity = size ? product.sizes.find(callBackFilter).quantity : null
 
-  //controlla la quantità disponibile per ogni prodotto nello store di redux
-  const storeQuantity = productStore.filter(item => item.size === size && item.id === product.id).length
+  /*
+  controlla la quantità disponibile per ogni prodotto nello store di redux,
+  il parametro sizeSelected sarà la size scelta per filtrare i prodotti nello
+  store di redux
+  */
+  const storeQuantity = sizeSelected =>
+    productStore.filter(item =>
+    item.size === sizeSelected && item.id === product.id).length
 
-  //controlla la quantità disponibile per ogni prodotto nello store di redux e confronta la quantità totale, se eccede disabilità il pulsante add
+  /*
+  controlla la quantità disponibile per ogni prodotto nello store di redux
+  e confronta la quantità totale, se eccede disabilità il pulsante add
+  */
   const checkAdd = () => {
-    if (storeQuantity >= quantity) {
+    if (storeQuantity(size) >= quantity) {
       return true
     }
   }
 
-  /*filtro i prodotti nello store con lo stesso ID e ottengo la lunghezza dell'array generato da filter
-    Assegno alla variabile initialQuantity la quantità iniziale del prodotto sommando anche
-    la quantità delle diverse taglie
-    Assegno a totalQuantity la differenza tra la quantità iniziale del prodotto e quella nella store di redux,
-    non facendo ulteriori controlli perchè per l'utente il bottone è disabilitato quando eccede le quantità
+  /*
+  mappo le size dell'array delle quantità iniziali e restituisco tante
+  option quante size sono disponibili, per determinare il numero di pezzi
+  disponibili sottraggo alla quantità iniziale la quantità del prodotto
+  con quella size nello store di redux riutilizzando la funzione
+  storeQuantity ma passando come parametro la size dell'opzione mappata
+  */
+  const options = product.sizes.map((size, i) => {
+    return (
+      <option
+        key={i}
+        value={size.size}>{`${size.size}
+        (${(size.quantity) - (storeQuantity(size.size))} pcs)`}
+      </option>
+    )
+  })
+
+  /*
+    filtro i prodotti nello store con lo stesso ID e ottengo la lunghezza
+    dell'array generato da filter
+    Assegno alla variabile initialQuantity la quantità iniziale del prodotto
+    sommando anche la quantità delle diverse taglie
+    Assegno a totalQuantity la differenza tra la quantità iniziale del
+    prodotto e quella nella store di redux, non facendo ulteriori controlli
+    perchè per l'utente il bottone è disabilitato quando eccede le quantità
     del prodotto disponibile
   */
-
-  const storeQuantitySameId = productStore.filter(item => item.id === product.id).length;
+  const storeQuantitySameId = productStore.filter(item =>
+    item.id === product.id
+    ).length;
   let initialQuantity = 0;
   const findInitialQuantity = prod => initialQuantity += prod.quantity;
   product.sizes.forEach(findInitialQuantity)
 
   let totalQuantity = initialQuantity - storeQuantitySameId;
 
-  //se la quantità del prodotto è inferiore a 4 mostra un testo, se è 1 aggiunge un componente visivo CircleLast
-  const textLastpiece = <span className="lastpiece">Last piece, buy it now!</span>
+  /*
+  se la quantità del prodotto è inferiore a 4 mostra un testo, se è 1
+  aggiunge un componente visivo CircleLast
+  */
+  const textLastpiece =
+  <span
+    className="lastpiece">
+    Last piece, buy it now!
+  </span>
   const checkLastPiece = totalqty => {
     if (totalqty <= 3) {
       return textLastpiece
@@ -81,14 +119,17 @@ const ProductCard = (props) => {
         <CardText>
           Qty:
           <span
-            className={"bolder" + (totalQuantity === 1 ? " color-red" : null)}>
-            {`${totalQuantity} `}
+            className={"bolder" + (totalQuantity === 1 ? " color-red" :
+            null
+            )}
+          >
+            {` ${totalQuantity} `}
           </span>
           {checkLastPiece(totalQuantity)}
         </CardText>
         <CardText>
           Price:
-          <span className="bolder">{`\u20AC ${product.price}`}</span>
+          <span className="bolder">{` \u20AC${product.price}`}</span>
         </CardText>
         <div className="footer-card">
           <div className="select-form">

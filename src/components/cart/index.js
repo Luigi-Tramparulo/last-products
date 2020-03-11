@@ -3,7 +3,7 @@ import { Table } from 'reactstrap'
 import { connect } from 'react-redux'
 import { products } from '../../costants'
 import './cart.scss'
-import { add,remove } from '../../redux/actions'
+import { add, remove } from '../../redux/actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import Button from '../button'
@@ -14,7 +14,10 @@ import Footer from '../footer'
 
 const Cart = (props) => {
 
-  //definiamo uno stato che viene aggiornato quando l'utente vuole ordinare per prezzo o per nome
+  /*
+  definiamo uno stato che viene aggiornato quando l'utente vuole ordinare
+  per prezzo o per nome
+  */
   const [sort, updateSort] = useState('NAME')
 
   //funzione di callback che ci restituisce la lunghezza della quanità dei prodotti nello store con stessa id e taglia
@@ -81,28 +84,47 @@ const Cart = (props) => {
   //array di prodotti dello store filtrati per id e size
   const productFiltered = removeDuplicates(props.productStore, 'id', 'size')
 
-  //array di prodotti dello store filtrati in base all'ordinamento di prezzo o nome
+  /*
+  array di prodotti dello store filtrati in base all'ordinamento di prezzo
+  o nome
+  */
   const productSorted = [...productFiltered].sort(sortByName)
   const reverseSorted = [...productFiltered].sort(reverseSortByName)
   const productSortedPrice = [...productFiltered].sort(sortByPrice)
   const reverseSortedPrice = [...productFiltered].sort(reverseSortByPrice)
 
-  //funzione per rimuovere tutta la quantità dell'ogetto nel carrello e quandi rimouvere l'oggetto dallo store
+  /*
+  funzione per rimuovere tutta la quantità dell'ogetto nel carrello e
+  quindi rimouvere l'oggetto dallo store
+  */
   const removeItem = (qty, item) => {
     for (let i = 0; i < qty; i++) {
       props.remove(item)
     }
   }
 
-  //funzione di callback da utilizzare nel mapping degli array filtrati, che mostra ogni riga
+  /*
+  funzione di callback da utilizzare nel mapping degli array filtrati,
+  che mostra ogni riga
+  */
   const rowRendered = (product, index) => {
-
     const quantityStore = duplicateProduct(product)
-    const quantity = products.find(item => item.id === product.id).sizes.find(size => size.size === product.size).quantity
+    const quantity = products.find(item =>
+      item.id === product.id).sizes.find(size =>
+        size.size === product.size).quantity
     return (
       <tr key={index}>
-        <td><div className="container-td-name"><div className="td-name">{`RayBan ${product.name}`}</div>
-          <span className="color-red" onClick={() => removeItem(quantityStore, product)}>Remove</span></div></td>
+        <td>
+          <div className="container-td-name">
+            <div className="td-name">
+              {`RayBan ${product.name}`}
+            </div>
+            <span className="color-red"
+              onClick={() => removeItem(quantityStore, product)}>
+              Remove
+              </span>
+          </div>
+        </td>
         <td>{product.sku}</td>
         <td>{product.size}</td>
         <td>
@@ -123,7 +145,10 @@ const Cart = (props) => {
     )
   }
 
-  //funzione di mapping in base alla selezione dell'utente, di default verrà mostrato l'ordine con cui l'utente ha aggiunto i prodotti nello store
+  /*funzione di mapping in base alla selezione dell'utente,
+  di default verrà mostrato l'ordine con cui l'utente ha aggiunto
+  i prodotti nello store
+  */
   const mapProductStore = () => {
     switch (sort) {
       case 'NAME':
@@ -139,50 +164,51 @@ const Cart = (props) => {
     }
   }
 
-  let totalPrice = props.productStore.map(product => product.price).reduce((total, currentPrice) => {
+  let totalPrice = props.productStore.map(product =>
+    product.price
+  ).reduce((total, currentPrice) => {
     return total + currentPrice
   }, 0)
 
   return (
-
     <div className="cart">
       <SubHeader titleAvaible="CART" productAvaible={`${fiteredById(props.productStore, 'id').length} products added`} />
 
       {props.productStore.length > 0 ?
 
-      <div className="table-border">
-        <h3>Your Cart contains :</h3>
-        <Table className="table-cart">
-          <thead>
-            <tr>
-              <th className={sort==='NAME'|| sort==='REVERSENAME' ? 'active':''}>
-                Model
+        <div className="table-border">
+          <h3>Your Cart contains :</h3>
+          <Table className="table-cart">
+            <thead>
+              <tr>
+                <th className={sort === 'NAME' || sort === 'REVERSENAME' ? 'active' : ''}>
+                  Model
                 <FontAwesomeIcon
-                  rotation={transformArrow('REVERSENAME')}
-                  icon={faArrowUp}
-                  onClick={(e) => sortBy('NAME', 'REVERSENAME')}
-                />
-              </th>
-              <th>SKU</th>
-              <th>Size</th>
-              <th>Qty</th>
+                    rotation={transformArrow('REVERSENAME')}
+                    icon={faArrowUp}
+                    onClick={(e) => sortBy('NAME', 'REVERSENAME')}
+                  />
+                </th>
+                <th>SKU</th>
+                <th>Size</th>
+                <th>Qty</th>
                 <th className={sort === 'PRICE' || sort === 'REVERSEPRICE' ? 'active' : ''}>
-                Price
+                  Price
                   <FontAwesomeIcon
                     rotation={transformArrow('REVERSEPRICE')}
                     icon={faArrowUp}
                     onClick={(e) => sortBy('PRICE', 'REVERSEPRICE')}
                   />
                 </th>
-            </tr>
-          </thead>
-          <tbody>
-            {mapProductStore()}
-          </tbody>
-        </Table>
-      </div>
+              </tr>
+            </thead>
+            <tbody>
+              {mapProductStore()}
+            </tbody>
+          </Table>
+        </div>
         : <Button path="/" textButton="Turn back to Store"></Button>
-        }
+      }
       <div className="total-cart">
         <p>Total piecies: <span className="bolder">{props.productStore.length}</span></p>
         <p>Total price: <span className="bolder">{` \u20AC${totalPrice}`}</span></p>
@@ -193,12 +219,11 @@ const Cart = (props) => {
         path="/orderprocessed"
         textButton="Checkout" />
     </div>
-
   );
 }
 
 const mapDispatchToProps = {
-  add,remove
+  add, remove
 }
 const mapStateToProps = (state) => {
   return {
